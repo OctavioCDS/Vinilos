@@ -1,0 +1,95 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Registrarse
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/registro.css' %}">
+{% endblock css %}
+{% block contenido %}
+<main>
+    <br>
+    <br>
+    <section class="container porsiacaso">
+        <h1 class="text-center text-white ">Registro</h1>
+        <hr class="text-white">
+        <form method="POST">
+            {% csrf_token %}
+            <section class="row">
+                <fieldset class="col-12">
+                    <label class="text-white">
+                        {{ formu.username.label }}:
+                    </label>
+                    {{ formu.username }}
+                    <p class="feedback-invalid">
+                        {{ formu.username.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <section class="row">
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ formu.first_name.label }}:
+                    </label>
+                    {{ formu.first_name }}
+                    <p class="feedback-invalid">
+                        {{ formu.first_name.errors }}
+                    </p>
+                </fieldset>
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ formu.last_name.label }}:
+                    </label>
+                    {{ formu.last_name }}
+                    <p class="feedback-invalid">
+                        {{ formu.last_name.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <section class="row">
+                <fieldset class="col-12">
+                    <label class="text-white">
+                        {{ formu.email.label }}:
+                    </label>
+                    {{ formu.email }}
+                    <p class="feedback-invalid">
+                        {{ formu.email.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <section class="row">
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ formu.password1.label }}:
+                    </label>
+                    {{ formu.password1 }}
+                    <p class="feedback-invalid">
+                        {{ formu.password1.errors }}
+                    </p>
+                </fieldset>
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ formu.password2.label }}:
+                    </label>
+                    {{ formu.password2 }}
+                    <p class="feedback-invalid">
+                        {{ formu.password2.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <hr class="text-white">
+            <section class="row">
+                <fieldset class="col-12">
+                        <button class="w-100 btn btn-success">Registrar</button>
+                </fieldset>
+            </section>
+            <a href="{% url 'Sesion' %}" class="text-center">¿Ya tienes una cuenta creada?</a>
+
+        </form>
+        <br>
+    </section>
+    <br>
+    <br>
+    
+</main>
+{% endblock contenido %}

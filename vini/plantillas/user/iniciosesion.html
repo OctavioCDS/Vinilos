@@ -1,0 +1,55 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Inicio de sesion
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/registro.css' %}">
+{% endblock css %}
+{% block contenido %}
+<main>
+    <br>
+    <br>
+    <section class="container porsiacaso">
+        <h1 class="text-center text-white ">Inicio de Sesion</h1>
+        <hr class="text-white">
+        <form method="POST">
+            {% csrf_token %}
+            <section class="row">
+                <fieldset class="col-12">
+                    <label class="text-white">
+                        {{ formulario.usuario.label }}:
+                    </label>
+                    {{ formulario.usuario }}
+                    <p class="feedback-invalid">
+                        {{ formulario.usuario.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <section class="row">
+                <fieldset class="col-12">
+                    <label class="text-white">
+                        {{ formulario.passw.label }}:
+                    </label>
+                    {{ formulario.passw }}
+                    <p class="feedback-invalid">
+                        {{ formulario.passw.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <hr class="text-white">
+            <section class="row">
+                <fieldset class="col-12">
+                        <button class="w-100 btn btn-success">Iniciar Sesion</button>
+                </fieldset>
+            </section>
+            <a href="{% url 'Registro' %}">¿No tienes cuenta registrada?</a>
+
+        </form>
+        <br>
+    </section>
+    <br>
+    <br>
+    
+</main>
+{% endblock contenido %}

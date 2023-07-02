@@ -1,0 +1,28 @@
+body{
+    width: 100vw;
+    min-height: 100vh;
+    height: auto;
+}
+
+  .card {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    background-color: #080808ac;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+audio{
+  width: 250px;
+  background-color: rgba(255, 255, 255, 0);
+
+}
+audio::-webkit-media-controls-panel {
+  background-color: rgba(60, 60, 60, 0.659)
+}
+
+
+
+  
+  

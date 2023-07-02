@@ -1,0 +1,13 @@
+
+body{
+    width: 99vw;
+    min-height: 100vh;
+    height: auto;
+    background-image: url('../img/fondoreg.jpg');
+    background-size: cover;
+}
+.porsiacaso{
+    border-radius: 10px;
+    background-color: rgba(37, 37, 37, 0.681);
+    width: 50%;
+}

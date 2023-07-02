@@ -1,0 +1,70 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Principal
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/Catalogo.css' %}">
+{% endblock css %}
+{% block contenido %}
+<main>
+    <hr>
+    <h1 class="text-center">Catalogo</h1>
+    <hr>
+    <section class="container">
+        {% if cancion %}
+            <article class="row gap-3">
+            {% for tema in cancion %}
+            <div class="card" >
+                    <img src="{{ tema.imagen.url }}" alt="Folder" class="card-img-top" height="200" >
+                <div class="card-body">
+                    <h5 class="card-title text-center text-white">{{ tema.nombre }}</h5>
+                    <hr>
+                    <p class="card-text">
+                        <p class="justify-content-end">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-success col-12" data-bs-toggle="modal" data-bs-target="#exampleModal{{ tema.id }}">
+                                Ver mas
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{ tema.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h1 class="modal-title  text-center" id="exampleModalLabel">   {{ tema.nombre }}</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <h4>Artistas:{{ tema.artistas }}</h4>
+                                            <p>Genero:{{ tema.genero }}</p>
+                                            <p>Fecha Publicacion:</p>
+                                            <p>{{tema.fecha_publicacion}}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
+                    </p>
+
+                    <br>
+                    <p class="card-text text-white">Escucha aqui:</p>
+                    <audio controls>
+                        <source src="{{ tema.musica.url }}" type="audio/mpeg">
+                    </audio>
+                    <hr>  
+                    <a href="#" class="btn btn-success col-12" role="submit" type="submit">${{tema.precio}}</a>
+                </div>
+            </div>
+            {% endfor %}
+            </article>
+        {% else %}
+        <p>No hay canciones disponibles en el catálogo.</p>
+        {% endif %}
+    </section>
+      
+      
+</main>
+{% endblock contenido %}
