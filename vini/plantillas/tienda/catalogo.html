@@ -1,22 +1,22 @@
 {% extends 'base/padre.html' %}
 {% load static %}
 {% block titulo %}
-Principal
+Catalogo
 {% endblock titulo %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'estilos/Catalogo.css' %}">
+<link rel="stylesheet" href="{% static 'styles/Catalogo.css' %}">
 {% endblock css %}
 {% block contenido %}
 <main>
     <hr>
     <h1 class="text-center">Catálogo</h1>
     <form action="{% url 'buscador' %}" method="GET" class="d-flex" role="search">
-        <input name="buscador" class="form-control me-2" type="search" placeholder="Ingresa un nombre" aria-label="Search">
+        <input name="buscador" class="form-control me-2" type="search" placeholder="Ingresa una cancion" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Buscar</button>
     </form>
     <hr>
     <section class="container">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 gap-3">
+        <div class="row  row-cols-lg-5 gap-5">
             {% if cancion %}
                 {% for tema in cancion %}
                 <div class="col">
@@ -24,6 +24,7 @@ Principal
                         <img src="{{ tema.imagen.url }}" alt="Folder" class="card-img-top" height="200">
                         <div class="card-body">
                             <h5 class="card-title text-center text-white">{{ tema.nombre }}</h5>
+                            <h6>Artistas: {{ tema.artistas }}</h6>
                             <hr>
                             <div class="text-center">
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{ tema.id }}">
@@ -56,7 +57,7 @@ Principal
                                 <source src="{{ tema.musica.url }}" type="audio/mpeg">
                             </audio>
                             <hr>
-                            <a href="#" class="btn btn-success col-12" role="submit" type="submit">${{ tema.precio }}</a>
+                            <a href="{% url 'AGG' tema.id %}" class="btn btn-success col-12" role="submit" type="submit">${{ tema.precio }}</a>
                         </div>
                     </div>
                 </div>

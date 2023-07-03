@@ -6,7 +6,12 @@ from .views import *
 
 urlpatterns = [
     path('',Catalogo,name='Catalogo'),
+    path('Carro/',Carro,name='Carro'),
     path('buscador/', buscador, name="buscador"),
+    path('agregar/<int:cancion_id>/',agregar_cancion,name='AGG'),
+    path('eliminar/<int:cancion_id>/',eliminar_cancion,name='DEL'),
+    path('restar/<int:cancion_id>/',restar_cancion,name='RES'),
+    path('limpiar/',limpiar_carro,name='CLEAN'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG == True:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

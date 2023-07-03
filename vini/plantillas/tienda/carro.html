@@ -1,0 +1,53 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Carro de compra
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/carro.css' %}">
+{% endblock css %}
+{% block contenido %}
+<main>
+    <section class="container d-flex gap-4" >
+        <article id="parte1">
+            <h1 class="text-center">Vinilos</h1>
+            <hr>
+            {% if request.session.carrito.items %}
+            {% for key, value in request.session.carrito.items %}
+                <div class="d-flex gap-4">
+                    <tr>
+                    <td>{{value.cancion_id}}-</td>
+                    <td>{{value.nombre}}</td>
+                    <fieldset class=" ">
+                        <td class="">${{value.total}}
+                            <a href="{% url 'AGG' value.cancion_id %}" class="badge btn btn-dark badge-dark">+</a>
+                            <a href="{% url 'RES' value.cancion_id %}" class="badge btn btn-dark badge-dark">-</a>
+                        </td>
+                        </tr>
+                    </fieldset>
+                </div>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">
+                    <div class="alert alert-dark text-center"> Sin Vinilos </div>
+                </td>
+            </tr>
+            {% endif %}
+
+        </article>
+        <article id="parte2">
+            <h1>Total:</h1>
+            <h1>${{total_carrito}}</h1>
+            <a href="" class="btn btn-dark"> Ir a Pagar</a>
+
+
+        </article>
+    </section>
+    <br>
+    <section class="container d-flex gap-2">
+        <a href="{% url 'CLEAN' %}" class="btn btn-danger col-4">Vaciar Carrito</a>
+        <a href="{% url 'Catalogo' %}" class="btn btn-danger col-4">Volver Catalogo</a>
+    </section>
+</main>
+{% endblock contenido %}
