@@ -1,0 +1,16 @@
+body{
+    width: 100vw;
+    min-height: 100vh;
+    height: auto;
+}
+main{
+    padding: 5px;
+}
+@media (max-width: 767px) {
+    table {
+        font-size: 12px;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+}

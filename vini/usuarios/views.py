@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import Registro,InicioSesion
-from django.contrib.auth.forms import UserCreationForm
+from .forms import Registro,InicioSesion,Modificacion
+from .models import Usuario
 from django.contrib.auth import authenticate, login, logout
+from django.conf import settings
 from sweetify import info, success, warning, error
 
 # Create your views here.
@@ -52,3 +53,42 @@ def cerrar_sesion(request):
         logout(request)
         success(request, 'Sesión cerrada')
     return redirect('Principal')
+
+def listadoUsers(request):
+    if request.user.is_authenticated and request.user.roles.rol == 'Admin':
+        usuarios = Usuario.objects.all()
+        for usuario in usuarios:
+            if not usuario.foto_usuario:
+                usuario.foto_usuario = settings.MEDIA_URL + 'default.jpg'
+                usuario.save()
+        return render(request, 'admin/listausers.html', {'usuarios': usuarios})
+    else:
+        return redirect('Principal')
+
+def buscadorU(request):
+    username = request.GET.get("username")
+    usuarios = Usuario.objects.filter(username__icontains=username)
+    return render(request, 'admin/listausers.html', {'usuarios': usuarios})
+
+def modificar_usuario(request, id):
+    usuario = Usuario.objects.get(id=id)
+    if request.method == "POST":
+        form = Modificacion(data=request.POST, files=request.FILES, instance=usuario)
+        if form.is_valid():
+            usuario.roles = form.cleaned_data['rol']
+            usuario.save()
+            success(request, 'El usuario se ha modificado correctamente')
+            return redirect('ListaU')
+    else:
+        form = Modificacion(instance=usuario)
+
+    contexto = {'form': form}
+    return render(request, 'user/Modificar.html', contexto)
+
+def eliminar_usuario(request, id):
+    usuario = Usuario.objects.get(id=id)
+    usuario.delete()
+    success(request, 'Usuario Eliminado correctamente.. :D')
+    return redirect("ListaU")
+
+

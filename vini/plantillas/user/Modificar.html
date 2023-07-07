@@ -1,0 +1,23 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Modificacion
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/Modificar.css' %}">
+{% endblock css %}
+{% block contenido %}
+<main>
+    <section class="container cuadro">
+        <h1 class="text-center text-white">Modificar Usuario</h1>
+        <hr>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <hr>
+            <button type="submit" class="w-100 btn btn-success">Modificar</button>
+        </form>
+        <br>
+    </section>
+</main>
+{% endblock contenido %}
