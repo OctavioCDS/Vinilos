@@ -1,6 +1,7 @@
 from django.forms import Form, CharField, TextInput, PasswordInput, ModelForm,EmailInput,BooleanField,CheckboxInput
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Usuario
 
 class Registro(UserCreationForm):
     def __init__(self,*args, **kwargs):
@@ -8,29 +9,13 @@ class Registro(UserCreationForm):
         self.fields['password1'].widget.attrs = {'class':'form-control'}
         self.fields['password2'].widget.attrs = {'class':'form-control'}
     class Meta:
-        model = User
-        fields = ['username','password1','password2','first_name','last_name','email']
+        model = Usuario
+        fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email']
         widgets = {
-            'username': TextInput(
-                attrs = {
-                    'class':'form-control'
-                }
-            ),
-            'first_name': TextInput(
-                attrs = {
-                    'class':'form-control'
-                }
-            ),
-            'last_name': TextInput(
-                attrs ={
-                    'class':'form-control'
-                }
-            ),
-            'email': EmailInput(
-                attrs={
-                    'class':'form-control'
-                }
-            ),
+            'username': TextInput(attrs={'class': 'form-control'}),
+            'first_name': TextInput(attrs={'class': 'form-control'}),
+            'last_name': TextInput(attrs={'class': 'form-control'}),
+            'email': EmailInput(attrs={'class': 'form-control'}),
         }
 class InicioSesion(Form):
     usuario = CharField(
