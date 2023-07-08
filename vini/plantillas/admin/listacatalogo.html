@@ -1,0 +1,77 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Listado de Vinilos
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/listadousers.css' %}">
+{% endblock css %}
+{% block contenido %}
+<h1 class="text-center">Listado de vinilos</h1>
+<hr>
+<main>
+    <section class="text-center container">
+        <form method="GET" action="{% url 'buscadorV' %}" class="d-flex" role="search">
+            <input name="nombre" class="form-control me-2" type="search" placeholder="Ingresa Nombre de cancion" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+    </section>
+    <article class="container">
+        <br>
+        <a href="{% url 'AgregarV' %}" class="btn btn-warning col-12">Agregar Vinilo</a>
+    </article>
+    <hr>
+    <section>
+        <article class="table-responsive">
+            <table class="table table-striped" id="listaproductos">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Nombre de Cancion</th>
+                        <th scope="col">Artistas</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Genero</th>
+                        <th scope="col">Fecha de publicacion</th>
+                        <th scope="col">Cancion</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Modificar</th>
+                        <th scope="col">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if canciones %}
+                        {% for g in canciones %}
+                            <tr>
+                                <td>{{g.id}}</td>
+                                <td>{{g.nombre}}</td>
+                                <td>{{g.artistas}}</td>
+                                <td>{{g.precio}}</td>
+                                <td>{{g.genero}}</td>
+                                <td>{{g.fecha_publicacion}}</td>
+                                <td>
+                                    <audio controls>
+                                        <source src="{{ g.musica.url }}" type="audio/mpeg">
+                                    </audio>
+                                </td>
+                                <td>
+                                    <img src="{{g.imagen.url}}" height="100" alt="Imagen del vinilo">
+                                </td>
+                                <td>
+                                    <a type="button" class="btn btn-secondary" href="{% url 'ModificarV' g.id %}">Modificar</a>
+                                </td>
+                                <td>
+                                    <a id="confirmar_eliminar" onclick="return confirm('¿Estás seguro que deseas eliminar el vinilo del sistema?');" type="button" class="btn btn-secondary" href="{% url 'EliminarV' g.id %}">Eliminar</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}    
+                        <tr>
+                            <td colspan="10" class="text-center">No existen vinilos</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock contenido %}

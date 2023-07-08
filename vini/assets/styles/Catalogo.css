@@ -5,6 +5,8 @@ body{
 }
 main{
   padding: 5px;
+  border: solid 3px black;
+  border-radius: 10px;
 }
 
   .card {

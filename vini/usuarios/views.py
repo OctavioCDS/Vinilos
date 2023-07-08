@@ -4,6 +4,7 @@ from .models import Usuario
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from sweetify import info, success, warning, error
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def registro(request):
@@ -54,15 +55,19 @@ def cerrar_sesion(request):
         success(request, 'Sesión cerrada')
     return redirect('Principal')
 
+@login_required
 def listadoUsers(request):
-    if request.user.is_authenticated and request.user.roles.rol == 'Admin':
-        usuarios = Usuario.objects.all()
-        for usuario in usuarios:
-            if not usuario.foto_usuario:
-                usuario.foto_usuario = settings.MEDIA_URL + 'default.jpg'
-                usuario.save()
-        return render(request, 'admin/listausers.html', {'usuarios': usuarios})
-    else:
+    try:
+        if request.user.is_authenticated and request.user.roles.rol == 'Admin':
+            usuarios = Usuario.objects.all()
+            for usuario in usuarios:
+                if not usuario.foto_usuario:
+                    usuario.foto_usuario = settings.MEDIA_URL + 'default.jpg'
+                    usuario.save()
+            return render(request, 'admin/listausers.html', {'usuarios': usuarios})
+        else:
+            return redirect('Principal')
+    except AttributeError:
         return redirect('Principal')
 
 def buscadorU(request):
