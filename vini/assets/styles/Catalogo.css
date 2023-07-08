@@ -27,6 +27,9 @@ audio{
 audio::-webkit-media-controls-panel {
   background-color: rgba(60, 60, 60, 0.659)
 }
+#margen{
+  padding: 10px;
+}
 
 
 

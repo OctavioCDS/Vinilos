@@ -7,67 +7,69 @@ Catalogo
 <link rel="stylesheet" href="{% static 'styles/Catalogo.css' %}">
 {% endblock css %}
 {% block contenido %}
-<main>
-    <hr>
-    <h1 class="text-center">Catálogo</h1>
-    <section class="container">
-        <form action="{% url 'buscador' %}" method="GET" class="d-flex" role="search">
-            <input name="buscador" class="form-control me-2" type="search" placeholder="Ingresa una cancion" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Buscar</button>
-        </form>
-    </section>
-    <hr>
-    <section class="container">
-        <div class="row  row-cols-lg-5 gap-5">
-            {% if cancion %}
-                {% for tema in cancion %}
-                <div class="col">
-                    <div class="card">
-                        <img src="{{ tema.imagen.url }}" alt="Folder" class="card-img-top" height="200">
-                        <div class="card-body">
-                            <h5 class="card-title text-center text-white">{{ tema.nombre }}</h5>
-                            <h6>Artistas: {{ tema.artistas }}</h6>
-                            <hr>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{ tema.id }}">
-                                    Ver más
-                                </button>
+<section id="margen">
+    <main>
+        <hr>
+        <h1 class="text-center">Catálogo</h1>
+        <section class="container">
+            <form action="{% url 'buscador' %}" method="GET" class="d-flex" role="search">
+                <input name="buscador" class="form-control me-2" type="search" placeholder="Ingresa una cancion" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+        </section>
+        <hr>
+        <section class="container">
+            <div class="row  row-cols-lg-5 gap-5">
+                {% if cancion %}
+                    {% for tema in cancion %}
+                    <div class="col">
+                        <div class="card">
+                            <img src="{{ tema.imagen.url }}" alt="Folder" class="card-img-top" height="200">
+                            <div class="card-body">
+                                <h5 class="card-title text-center text-white">{{ tema.nombre }}</h5>
+                                <h6>Artistas: {{ tema.artistas }}</h6>
+                                <hr>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{ tema.id }}">
+                                        Ver más
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal fade" id="exampleModal{{ tema.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header text-center">
-                                        <h1 class="modal-title text-center" id="exampleModalLabel">{{ tema.nombre }}</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-center">
-                                        <h4>Artistas: {{ tema.artistas }}</h4>
-                                        <p>Género: {{ tema.genero }}</p>
-                                        <p>Fecha de Publicación:</p>
-                                        <p>{{ tema.fecha_publicacion }}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <div class="modal fade" id="exampleModal{{ tema.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h1 class="modal-title text-center" id="exampleModalLabel">{{ tema.nombre }}</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <h4>Artistas: {{ tema.artistas }}</h4>
+                                            <p>Género: {{ tema.genero }}</p>
+                                            <p>Fecha de Publicación:</p>
+                                            <p>{{ tema.fecha_publicacion }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text text-white">Escucha aquí:</p>
-                            <audio controls>
-                                <source src="{{ tema.musica.url }}" type="audio/mpeg">
-                            </audio>
-                            <hr>
-                            <a href="{% url 'AGG' tema.id %}" class="btn btn-success col-12" role="submit" type="submit">${{ tema.precio }}</a>
+                            <div class="card-body">
+                                <p class="card-text text-white">Escucha aquí:</p>
+                                <audio controls>
+                                    <source src="{{ tema.musica.url }}" type="audio/mpeg">
+                                </audio>
+                                <hr>
+                                <a href="{% url 'AGG' tema.id %}" class="btn btn-success col-12" role="submit" type="submit">${{ tema.precio }}</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p>No hay canciones disponibles en el catálogo.</p>
-            {% endif %}
-        </div>
-    </section>
-</main>
+                    {% endfor %}
+                {% else %}
+                    <p>No hay canciones disponibles en el catálogo.</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</section>
 {% endblock contenido %}

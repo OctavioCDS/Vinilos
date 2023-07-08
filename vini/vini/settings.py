@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'vini.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ocfigueroa',
+        'USER': 'oc.figueroa',
+        'PASSWORD': 'Oc.figueroa_2023',
+        'HOST': '164.152.54.1',
+        'PORT': 3306
     }
 }
 
