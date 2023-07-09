@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 def Catalogo(request):
     cancion = Cancion.objects.all()
     return render(request,'tienda/catalogo.html',{'cancion': cancion})
+@login_required
 def Carro(request):
     return render(request,'tienda/carro.html')
 

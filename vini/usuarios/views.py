@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import Registro,InicioSesion,Modificacion,RegistroA
+from .forms import Registro,InicioSesion,Modificacion,RegistroA,RegistroPerfil
 from .models import Usuario
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
@@ -25,6 +25,7 @@ def registro(request):
         }
         warning(request,'Uyy, Ha ocurrido un error con los campos ingresados, verifique..')
         return render(request,'user/registro.html',contexto)
+################################################
 def iniciosesion(request):
     if request.method == 'GET':
         contexto = {
@@ -49,12 +50,13 @@ def iniciosesion(request):
             'formulario': datos_usuario
         }
         return render(request,'user/iniciosesion.html', contexto)
+##############################################
 def cerrar_sesion(request):
     if request.user.is_authenticated:
         logout(request)
         success(request, 'Sesión cerrada')
     return redirect('Principal')
-
+##############################################
 @login_required
 def listadoUsers(request):
     try:
@@ -69,12 +71,12 @@ def listadoUsers(request):
             return redirect('Principal')
     except AttributeError:
         return redirect('Principal')
-
+##############################################
 def buscadorU(request):
     username = request.GET.get("username")
     usuarios = Usuario.objects.filter(username__icontains=username)
     return render(request, 'admin/listausers.html', {'usuarios': usuarios})
-
+##############################################
 def modificar_usuario(request, id):
     usuario = Usuario.objects.get(id=id)
     if request.method == "POST":
@@ -89,13 +91,28 @@ def modificar_usuario(request, id):
 
     contexto = {'form': form}
     return render(request, 'user/Modificar.html', contexto)
+################################################
+@login_required
+def modificar_perfil(request, id):
+    usuario = Usuario.objects.get(id=id)
+    if request.method == "POST":
+        form = RegistroPerfil(data=request.POST, files=request.FILES, instance=usuario)
+        if form.is_valid():
+            usuario.save()
+            success(request, 'Tu perfil se ha modificado correctamente')
+            return redirect('Perfil')
+    else:
+        form = RegistroPerfil(instance=usuario)
 
+    contexto = {'form': form}
+    return render(request, 'user/PerfilM.html', contexto)
+#################################################
 def eliminar_usuario(request, id):
     usuario = Usuario.objects.get(id=id)
     usuario.delete()
     success(request, 'Usuario Eliminado correctamente.. :D')
     return redirect("ListaU")
-
+##################################################
 def agregar_usuarioA(request):
     try:
        if request.user.is_authenticated and request.user.is_superuser or request.user.roles.rol == 'Admin':
@@ -114,5 +131,9 @@ def agregar_usuarioA(request):
             return render(request, 'user/AgregarU.html', contexto)
     except AttributeError:
         return redirect('Principal')
+################################################
+@login_required
+def perfil(request):
+    return render(request,'user/perfil.html')
 
 

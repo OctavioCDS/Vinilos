@@ -90,3 +90,21 @@ class RegistroA(UserCreationForm):
             'email': EmailInput(attrs={'class': 'form-control'}),
             'rol': Select(attrs={'class': 'form-control'}),
         }
+class RegistroPerfil(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'password' in self.fields:
+            self.fields.pop('password')
+        if 'password1' in self.fields:
+            self.fields['password1'].required = False
+
+    class Meta:
+        model = Usuario
+        fields = ['username', 'first_name', 'last_name', 'email', 'foto_usuario']
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control'}),
+            'first_name': TextInput(attrs={'class': 'form-control'}),
+            'last_name': TextInput(attrs={'class': 'form-control'}),
+            'email': EmailInput(attrs={'class': 'form-control'}),
+            'foto_usuario': FileInput(attrs={'class': 'form-control'}),
+        }

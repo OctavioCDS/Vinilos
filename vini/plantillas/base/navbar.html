@@ -43,11 +43,15 @@
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{% static 'img/usuario2.png' %}" width="30">
+                        {% if user.is_authenticated and user.foto_usuario %}
+                            <img src="{{user.foto_usuario.url}}" width="30">
+                        {% else %}
+                            <img src="{% static 'img/usuario2.png' %}" width="30">
+                        {% endif %}
                     </a>
                     <ul class="dropdown-menu">
                         <li><h4 class="dropdown-item">{{ user.username }}</h4></li>
-                        <li><a class="dropdown-item" href="#">Ver perfil</a></li>
+                        <li><a class="dropdown-item" href="{% url 'Perfil' %}">Ver perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
                         {% if user.is_authenticated %}
                         <li><a class="dropdown-item" href="{% url 'Cerrar' %}">Cerrar Sesión</a></li>

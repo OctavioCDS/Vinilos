@@ -1,0 +1,13 @@
+.marco{
+    border:solid 5px black ;
+    border-radius: 10px;
+}
+@media (max-width: 768px) {
+    .perfil-section {
+        padding: 20px;
+    }
+    .perfil-photo img {
+        max-width: 200px;
+        max-height: 200px;
+    }
+}

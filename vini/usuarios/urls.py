@@ -12,7 +12,9 @@ urlpatterns = [
     path('buscadorU/', buscadorU, name="buscadorU"),
     path('ModificarU/<id>', modificar_usuario, name="ModificarU"),
     path('EliminarU/<id>', eliminar_usuario, name="EliminarU"),
-    path('AgregarU', agregar_usuarioA, name="AgregarU"),
+    path('AgregarU/', agregar_usuarioA, name="AgregarU"),
+    path('Perfil/', perfil, name="Perfil"),
+    path('PerfilM/<id>', modificar_perfil, name="PerfilM"),
 ]
 if settings.DEBUG == True:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

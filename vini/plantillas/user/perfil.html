@@ -1,0 +1,41 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Perfil
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/perfil.css' %}">
+{% endblock css %}
+{% block contenido %}
+<main>
+    <br>
+    <br>
+    <section class="container perfil-section text-center marco">
+        <h1 class="text-center">Perfil de Usuario</h1>
+        <hr>
+        <div class="perfil-info">
+            <div class="perfil-photo">
+                {% if user.foto_usuario %}
+                    <img src="{{ user.foto_usuario.url }}" alt="Foto de perfil" width="300" height="300">
+                {% else %}
+                    <img src="{% static 'images/default-profile.jpg' %}" alt="Foto de perfil predeterminada" width="300" height="300">
+                {% endif %}
+            </div>
+            <div class="perfil-details">
+                <h3>Nombre: {{ user.get_full_name }}</h3>
+                <p>Email: {{ user.email }}</p>
+                <p>Username: {{ user.username }}</p>
+                {% if user.roles %}
+                    <p>Rol: {{ user.roles.rol }}</p>
+                {% else %}
+                    <p>Cliente</p>
+                {% endif %}
+            </div>
+        </div>
+        <a href="{% url 'PerfilM' user.id %}" class="btn btn-warning">Modificar Perfil</a>
+        <a href="{% url 'Cerrar' %}" class="btn btn-danger">Cerrar Sesion</a>
+    </section>
+    <br>
+    <br>
+</main>
+{% endblock contenido %}

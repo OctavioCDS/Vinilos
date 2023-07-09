@@ -48,7 +48,13 @@ Listado de usuarios
                                 <td>{{ g.last_name }}</td>
                                 <td>{{ g.email }}</td>
                                 <td>**********</td>
-                                <td>{{ g.roles }}</td>
+                                <td>
+                                    {% if g.roles %}
+                                        {{ g.roles }}
+                                    {% else %}
+                                        <p>Cliente</p>
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <img src="{{ g.foto_usuario.url }}" height="100" alt="Imagen del usuario">
                                 </td>
