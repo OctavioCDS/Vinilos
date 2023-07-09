@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from sweetify import info, success, warning, error
 from django.contrib.auth.decorators import login_required
+from music_store.models import Comprobante
 
 # Create your views here.
 def registro(request):
@@ -135,5 +136,10 @@ def agregar_usuarioA(request):
 @login_required
 def perfil(request):
     return render(request,'user/perfil.html')
+
+@login_required
+def mis_compras(request):
+    comprobantes = Comprobante.objects.filter(cliente=request.user)
+    return render(request, 'user/historialcompra.html', {'comprobantes': comprobantes})
 
 

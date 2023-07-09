@@ -1,0 +1,43 @@
+{% extends 'base/padre.html' %}
+{% block titulo %}
+Mis Compras
+{% endblock titulo %}
+{% block css %}
+<style>
+    .card{
+        border: solid 3px black;
+    }
+</style>
+{% endblock css %}
+{% block contenido %}
+<main>
+    <h1 class="text-center">Historial de Compras</h1>
+    <hr>
+    <section class="container">
+        <div class="row  gap-5">
+            {% if comprobantes %}
+                {% for comprobante in comprobantes %}
+                    <div class="card">
+                        <div class="card-header">
+                            Comprobante de Venta {{ comprobante.id }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-text">Fecha de compra: {{ comprobante.fecha_compra }}</h5>
+                            <p class="card-text">Total: ${{ comprobante.total }}</p>
+                            <h6>Productos comprados:</h6>
+                            <ul>
+                                {% for detalle in comprobante.detallecomprobante_set.all %}
+                                    <li>{{ detalle.cancion.nombre }} - Artistas: {{detalle.cancion.artistas}} - Precio: ${{ detalle.cancion.precio }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No has realizado ninguna compra...</p>
+            {% endif %}
+
+        </div>
+    </section>
+</main>
+{% endblock contenido %}

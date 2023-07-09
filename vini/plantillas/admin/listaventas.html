@@ -1,0 +1,51 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Listado de Ventas
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/listadousers.css' %}">
+{% endblock css %}
+{% block contenido %}
+<h1 class="text-center">Listado de Ventas</h1>
+<hr>
+<main>
+    <section class="text-center container">
+        <form method="GET" action="{% url 'buscadorC' %}" class="d-flex" role="search">
+            <input name="id" class="form-control me-2" type="search" placeholder="Ingresa id de comprobante" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+    </section>
+    <hr>
+    <section>
+        <article class="table-responsive">
+            <table class="table table-striped" id="listaproductos">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if comprobantes %}
+                        {% for c in comprobantes %}
+                            <tr>
+                                <td>{{c.id}}</td>
+                                <td>{{c.cliente}}</td>
+                                <td>{{c.total}}</td>
+                                <td>{{c.fecha_compra}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}    
+                        <tr>
+                            <td colspan="10" class="text-center">No se han realizado Ventas.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock contenido %}

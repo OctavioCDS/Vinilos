@@ -1,0 +1,56 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Comprobante de Venta
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/comprobante.css' %}">
+{% endblock css %}
+{% block contenido %}
+<main>
+    <section class="container fondocom text-white">
+        <h1 class="text-center"><img src="{% static 'img/logo.png' %}" width="100" height="100">Comprobante de Venta<img src="{% static 'img/logo.png' %}" width="100" height="100"></h1>
+        <hr class="text-white">
+        <h2 class="text-center">Gracias por su compra!! {{ comprobante.cliente }}</h2>
+        <div class="row text-center">
+            <div class="col-md-6">
+                <p>Nombre: {{ nombre_cliente }}</p>
+            </div>
+            <div class="col-md-6">
+                <p>Apellido: {{ apellido_cliente }}</p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12">
+                <p>Correo: {{ correo_cliente }}</p>
+            </div>
+        </div>
+        <h6 class="justify-content-end">Fecha de compra: {{ comprobante.fecha_compra }}</h6>
+        <hr class="text-white">
+        <h3>Vinilos:</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in comprobante.detallecomprobante_set.all %}
+                    <tr>
+                        <td>{{ detalle.cancion.nombre }}</td>
+                        <td>${{ detalle.cancion.precio }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <hr class="text-white">
+        <h3 class="text-center">Total a pagar: ${{ comprobante.total }}</h3>
+    </section>
+    <div class="text-center">
+        <a href="{% url 'Catalogo' %}" class="btn btn-success">Volver al catálogo</a>
+    </div>
+</main>
+{% endblock contenido %}

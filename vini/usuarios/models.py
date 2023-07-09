@@ -37,3 +37,6 @@ class UsuarioManager(BaseUserManager):
 class Usuario(AbstractUser):
     foto_usuario = ImageField(upload_to='imagen_usuario/' ,blank=True ,null=True,default='default.jpg')
     roles = ForeignKey (Rol, null=True, blank=True,on_delete=SET_NULL)
+
+
+

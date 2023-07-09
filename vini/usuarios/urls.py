@@ -15,6 +15,7 @@ urlpatterns = [
     path('AgregarU/', agregar_usuarioA, name="AgregarU"),
     path('Perfil/', perfil, name="Perfil"),
     path('PerfilM/<id>', modificar_perfil, name="PerfilM"),
+    path('Historial/', mis_compras, name="Historial"),
 ]
 if settings.DEBUG == True:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

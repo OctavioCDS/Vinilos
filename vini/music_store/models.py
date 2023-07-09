@@ -1,9 +1,10 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from usuarios.models import Usuario
 from django.db.models import (
     Model,
     CharField,
-    TextField,
+    ManyToManyField,
     FileField,
     ImageField,
     ForeignKey,
@@ -34,5 +35,27 @@ class Cancion(Model):
     def __str__(self):
         para = 'cancion:' + ' ' + str(self.nombre)+ ' ' + 'precio:' + str(self.precio) + ' ' + 'artistas:' + str(self.artistas)+ ' ' + 'fecha de publicacion: ' + str(self.fecha_publicacion) 
         return para
+
+
+class Comprobante(Model):
+    #id por django
+    cliente = ForeignKey(Usuario,on_delete= CASCADE)
+    fecha_compra = DateField(auto_now=True)
+    canciones = ManyToManyField(Cancion)
+    total = IntegerField(validators=[MinValueValidator(10000000)])
+
+    def __str__(self):
+        xd3 = "Cliente: " + str(self.cliente) + " - " + "Total: " + str(self.total) + " - " + "fecha:" + str(self.fecha_compra)
+        return xd3
+
+
+class DetalleComprobante(Model):
+    #id por django
+    comprobante = ForeignKey(Comprobante, on_delete=CASCADE)
+    cancion = ForeignKey(Cancion, on_delete=CASCADE)
+
+    def __str__(self):
+        xd3 = "Cancion: " + str(self.cancion) + " - " + "nombre: " + str(self.comprobante)
+        return xd3
 
 

@@ -52,6 +52,7 @@
                     <ul class="dropdown-menu">
                         <li><h4 class="dropdown-item">{{ user.username }}</h4></li>
                         <li><a class="dropdown-item" href="{% url 'Perfil' %}">Ver perfil</a></li>
+                        <li><a class="dropdown-item" href="{% url 'Historial' %}">Historial de compras</a></li>
                         <li><hr class="dropdown-divider"></li>
                         {% if user.is_authenticated %}
                         <li><a class="dropdown-item" href="{% url 'Cerrar' %}">Cerrar Sesión</a></li>
@@ -73,7 +74,7 @@
         </div>
     </div>
 </nav>
-{% if user.is_authenticated and user.roles.rol == 'Admin' or user.is_authenticated and user.roles.rol == 'Bodeguero' or user.is_superuser %}
+{% if user.is_authenticated and user.roles.rol == 'Admin' or user.is_authenticated and user.roles.rol == 'Bodeguero' or user.roles.rol == 'Vendedor' or user.is_superuser %}
     <nav class="navbar bg-dark border-bottom border-bottom-dark" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Menu de administracion</a>
@@ -84,6 +85,9 @@
             <div class="navbar-nav">
                 {% if user.is_authenticated and user.roles.rol == 'Admin' or user.is_superuser %}
                         <a class="nav-link active" aria-current="page" href="{% url 'ListaU' %}">Lista de usuarios</a>
+                {% endif %}
+                {% if user.is_authenticated and user.roles.rol == 'Admin' or user.roles.rol == 'Vendedor' or user.is_superuser %}
+                        <a class="nav-link active" aria-current="page" href="{% url 'ListaC' %}">Lista de Ventas</a>
                 {% endif %}
                 {% if user.is_authenticated and user.roles.rol == 'Admin' or user.is_authenticated and user.roles.rol == 'Bodeguero' or user.is_superuser %}
                 <a class="nav-link" href="{% url 'ListaV' %}">Lista de Vinilos</a>

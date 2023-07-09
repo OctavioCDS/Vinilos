@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from sweetify import info, success, warning, error
-from .models import Cancion
+from .models import Cancion,Comprobante,DetalleComprobante
 from .CarritoCompra import Carrito
 from .forms import ModificacionVinilo
 
@@ -94,4 +94,44 @@ def agregar_vinilo(request):
             return render(request, 'admin/agregarvinilo.html', contexto)
     except AttributeError:
         return redirect('Principal')
+    
+
+@login_required
+def generar_comprobante(request):
+    carrito = Carrito(request)
+    productos = carrito.get_productos()
+    total = carrito.total()
+
+    # Crear un objeto Comprobante
+    comprobante = Comprobante(cliente=request.user, total=total)
+    comprobante.save()
+
+    for producto in productos:
+        cancion = Cancion.objects.get(id=producto['cancion_id'])
+        detalle_comprobante = DetalleComprobante(comprobante=comprobante, cancion=cancion)
+        detalle_comprobante.save()
+
+    carrito.limpiar()
+
+    nombre_cliente = request.user.first_name
+    apellido_cliente = request.user.last_name
+    correo_cliente = request.user.email
+
+    return render(request, 'tienda/Comprobante.html', {'comprobante': comprobante, 'nombre_cliente': nombre_cliente, 'apellido_cliente': apellido_cliente, 'correo_cliente': correo_cliente})
+
+def listaventas(request):
+    try:
+        if request.user.is_authenticated and request.user.is_superuser or request.user.roles.rol == 'Admin' or request.user.roles.rol == 'Vendedor':
+            comprobantes = Comprobante.objects.all()
+            return render(request, 'admin/listaventas.html', {'comprobantes': comprobantes})
+        else:
+            return redirect('Principal')
+    except AttributeError:
+        return redirect('Principal') 
+    
+
+def buscadorC(request):
+    id = request.GET.get("id")
+    comprobantes = Comprobante.objects.filter(id__icontains=id)
+    return render(request, 'admin/listaventas.html', {'comprobantes': comprobantes})
 

@@ -1,0 +1,10 @@
+
+main{
+    padding: 10px;
+}
+.fondocom{
+    border: solid 2px black;
+    border-radius: 5px;
+    width: 50%;
+    background-color: rgba(35, 35, 35, 0.647);
+}
