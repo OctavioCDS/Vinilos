@@ -4,7 +4,7 @@ from .models import Cancion
 from .CarritoCompra import Carrito
 from .forms import ModificacionVinilo
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 
 # Create your views here.
 @login_required
@@ -43,7 +43,7 @@ def limpiar_carro(request):
 @login_required
 def listadoVinilos(request):
     try:
-        if request.user.is_authenticated and request.user.roles.rol == 'Admin' or 'Bodeguero':
+        if request.user.is_authenticated and request.user.is_superuser or request.user.roles.rol == 'Admin' or request.user.roles.rol == 'Bodeguero':
             canciones = Cancion.objects.all()
             return render(request, 'admin/listacatalogo.html', {'canciones': canciones})
         else:
@@ -79,7 +79,7 @@ def eliminar_vinilo(request, id):
 
 def agregar_vinilo(request):
     try:
-        if request.user.is_authenticated and request.user.roles.rol == 'Admin' or 'Bodeguero':
+       if request.user.is_authenticated and request.user.is_superuser or request.user.roles.rol == 'Admin' or request.user.roles.rol == 'Bodeguero':
             if request.method == 'POST':
                 form = ModificacionVinilo(request.POST, request.FILES)
                 if form.is_valid():

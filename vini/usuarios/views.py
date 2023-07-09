@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import Registro,InicioSesion,Modificacion
+from .forms import Registro,InicioSesion,Modificacion,RegistroA
 from .models import Usuario
 from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
@@ -58,7 +58,7 @@ def cerrar_sesion(request):
 @login_required
 def listadoUsers(request):
     try:
-        if request.user.is_authenticated and request.user.roles.rol == 'Admin':
+        if request.user.is_authenticated and request.user.is_superuser or request.user.roles.rol == 'Admin':
             usuarios = Usuario.objects.all()
             for usuario in usuarios:
                 if not usuario.foto_usuario:
@@ -95,5 +95,24 @@ def eliminar_usuario(request, id):
     usuario.delete()
     success(request, 'Usuario Eliminado correctamente.. :D')
     return redirect("ListaU")
+
+def agregar_usuarioA(request):
+    try:
+       if request.user.is_authenticated and request.user.is_superuser or request.user.roles.rol == 'Admin':
+            if request.method == 'POST':
+                form = RegistroA(request.POST, request.FILES)
+                if form.is_valid():
+                    usuario = form.save(commit=False)
+                    usuario.roles = form.cleaned_data['rol']
+                    usuario.save()
+                    success(request, 'El Usuario se ha agregado correctamente :D')
+                    return redirect('ListaU')
+            else:
+                form = RegistroA()
+
+            contexto = {'form': form}
+            return render(request, 'user/AgregarU.html', contexto)
+    except AttributeError:
+        return redirect('Principal')
 
 

@@ -72,3 +72,21 @@ class InicioSesion(Form):
 
         )
     )
+
+class RegistroA(UserCreationForm):
+    rol = ModelChoiceField(queryset=Rol.objects.all(), widget=Select(attrs={'class': 'form-control'}), required=False)
+
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args,**kwargs)
+        self.fields['password1'].widget.attrs = {'class':'form-control'}
+        self.fields['password2'].widget.attrs = {'class':'form-control'}
+    class Meta:
+        model = Usuario
+        fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email','rol']
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control'}),
+            'first_name': TextInput(attrs={'class': 'form-control'}),
+            'last_name': TextInput(attrs={'class': 'form-control'}),
+            'email': EmailInput(attrs={'class': 'form-control'}),
+            'rol': Select(attrs={'class': 'form-control'}),
+        }

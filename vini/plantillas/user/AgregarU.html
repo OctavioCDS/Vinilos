@@ -1,0 +1,100 @@
+{% extends 'base/padre.html' %}
+{% load static %}
+{% block titulo %}
+Registro de admin
+{% endblock titulo %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'styles/Modificar.css' %}">
+{% endblock css %}
+{% block contenido %}
+<main>
+    <br>
+    <br>
+    <section class=" cuadro container porsiacaso">
+        <h1 class="text-center text-white ">Registro de usuario</h1>
+        <hr class="text-white">
+        <form method="POST">
+            {% csrf_token %}
+            <section class="row">
+                <fieldset class="col-12">
+                    <label class="text-white">
+                        {{ form.username.label }}:
+                    </label>
+                    {{ form.username }}
+                    <p class="feedback-invalid">
+                        {{ form.username.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <section class="row">
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ form.first_name.label }}:
+                    </label>
+                    {{ form.first_name }}
+                    <p class="feedback-invalid">
+                        {{ form.first_name.errors }}
+                    </p>
+                </fieldset>
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ form.last_name.label }}:
+                    </label>
+                    {{ form.last_name }}
+                    <p class="feedback-invalid">
+                        {{ form.last_name.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <section class="row">
+                <fieldset class="col-12">
+                    <label class="text-white">
+                        {{ form.email.label }}:
+                    </label>
+                    {{ form.email }}
+                    <p class="feedback-invalid">
+                        {{ form.email.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <section class="row">
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ form.password1.label }}:
+                    </label>
+                    {{ form.password1 }}
+                    <p class="feedback-invalid">
+                        {{ form.password1.errors }}
+                    </p>
+                </fieldset>
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ form.password2.label }}:
+                    </label>
+                    {{ form.password2 }}
+                    <p class="feedback-invalid">
+                        {{ form.password2.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <section class="row">
+                <fieldset class="col-6">
+                    <label class="text-white">
+                        {{ form.rol.label }}:
+                    </label>
+                    {{ form.rol }}
+                    <p class="feedback-invalid">
+                        {{ form.rol.errors }}
+                    </p>
+                </fieldset>
+            </section>
+            <hr class="text-white">
+            <section class="row">
+                <fieldset class="col-12">
+                        <button class="w-100 btn btn-success">Registrar Usuario</button>
+                </fieldset>
+            </section>
+        </form>
+    </section>
+</main>
+{% endblock contenido %}
