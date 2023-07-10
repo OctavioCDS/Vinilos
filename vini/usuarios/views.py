@@ -137,6 +137,9 @@ def agregar_usuarioA(request):
 def perfil(request):
     return render(request,'user/perfil.html')
 
+def sobrenosotros(request):
+    return render(request,'user/sobrenosotros.html')
+
 @login_required
 def mis_compras(request):
     comprobantes = Comprobante.objects.filter(cliente=request.user)
